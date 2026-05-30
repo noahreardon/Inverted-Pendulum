@@ -58,8 +58,8 @@ float pid(double error, float currentAngle) { // function for calculating new mo
 void setup() {
   // PID values
   kp = 280.0; // 160 was GOOD (on 1/4 microstepping)
-  ki = 0.0;
-  kd = 20.0;
+  ki = 20.0;
+  kd = 0.0;
   lastTime = millis();
 
 
