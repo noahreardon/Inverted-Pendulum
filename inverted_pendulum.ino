@@ -92,22 +92,21 @@ void loop() {
     myStepper.setSpeed(0);
     myStepper.runSpeed();
   } else {
-
     double now = millis();
     static double slowLast = 0;
     static float prevAngleForVel = 180.0;
-    if (now - slowLast >= 2) {
-      dt_vel = (now - slowLast) / 1000.0;
-      thetaDot = (angleDeg - prevAngleForVel) / dt_vel;
-      prevAngleForVel = angleDeg;
+    // if (now - slowLast >= 2) {
+      // dt_vel = (now - slowLast) / 1000.0;
+    thetaDot = (angleDeg - prevAngleForVel) / dt_vel;
+    prevAngleForVel = angleDeg;
 
-      dt = (now - slowLast) / 1000.0;
+    dt = (now - slowLast) / 1000.0;
 
-      double error = (setpoint - angleDeg);
-      myStepper.setSpeed(pid(error, angleDeg));
+    double error = (setpoint - angleDeg);
+    myStepper.setSpeed(pid(error, angleDeg));
 
-      slowLast = now;
-    }
+    slowLast = now;
+    // }
 
     // static double fastLast = 0;
     
