@@ -57,9 +57,9 @@ float pid(double error, float currentAngle) { // function for calculating new mo
 
 void setup() {
   // PID values
-  kp = 280.0; // 160 was GOOD (on 1/4 microstepping)
-  ki = 20.0;
-  kd = 0.0;
+  kp = 530.0; // 160 was GOOD (on 1/4 microstepping)
+  ki = 0.0;
+  kd = 35.0;
   lastTime = millis();
 
 
@@ -74,7 +74,6 @@ void setup() {
   // Set maximum speed, acceleration, and initial speed
   myStepper.setMaxSpeed(6000.0);    // Steps per second
   myStepper.setSpeed(0);
-  // myStepper.setAcceleration(1000.0); // Steps per second per second
 
 }
 
@@ -143,6 +142,7 @@ void loop() {
   // Serial.print(" ");
   // Serial.print(a);
   // Serial.println(" ");
+  Serial.println(angleDeg);
 
 }
 
