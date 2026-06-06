@@ -18,4 +18,4 @@ xlim([0 1])
 
 title("DC motor response to position feedback control")
 xlabel("Time (s)")
-ylabel("Position (rad)")
+ylabel()
