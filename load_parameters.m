@@ -1,21 +1,8 @@
-J=3.2284e-6;
-b=3.5077e-6;
-K=0.0274;
-R=4;
-L=2.75e-6;
-
-Kp_vector = 1:5:12;
-hold on
-for ii=Kp_vector
-    Kp = ii;
-    out = sim("motor_model.slx");
-    plot(out.tout, out.simout.Data, 'DisplayName', sprintf("Kp=%d", ii))
-    grid on
+function load_parameters()
+    assignin('base', 'J', 3.2284e-6)
+    assignin('base', 'b', 3.5077e-6)
+    assignin('base', 'K', 0.0274)
+    assignin('base', 'R', 4)
+    assignin('base', 'L', 2.75e-6)
 end
-legend;
 
-xlim([0 1])
-
-title("DC motor response to position feedback control")
-xlabel("Time (s)")
-ylabel("Position (rad)")
