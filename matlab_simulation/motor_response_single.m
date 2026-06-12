@@ -1,7 +1,7 @@
 load_parameters();
 
 Kp = 8;
-out = sim("motor_model.slx");
+out = sim("motor_position_control.slx");
 figure;
 subplot(2, 1, 1)
 plot(out.tout, out.motor_position.Data, 'DisplayName', "Motor position")
