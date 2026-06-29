@@ -78,7 +78,7 @@ K = lqr(A, B, Q, R);
 load_parameters();
 
 
-out = sim("pendulum_control.slx");
+out = sim("C:\Users\REARDONNM24\OneDrive - Grove City College\Projects\Inverted-Pendulum\matlab_simulation\Simulink models\Pendulum models\pendulum_control.slx");
 
 subplot(5, 1, 1)
 plot(out.tout, out.motor_torque.Data)
