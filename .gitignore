@@ -1,2 +1,15 @@
-*.asv
+# --- simulink simulation and cache artifacts --- 
+
 *.slxc
+slprj/
+sccprj/
+
+# --- matlab code generation ---
+codegen/
+
+# --- autosave and backup files ---
+*.asv 
+*.m~
+*.autosave
+*slx.r*
+*.bak 
