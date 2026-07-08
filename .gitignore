@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # --- simulink simulation and cache artifacts --- 
 
 *.slxc
@@ -13,3 +14,10 @@ codegen/
 *.autosave
 *slx.r*
 *.bak 
+
+*.asv
+*.slxc
+
+# --- kicad backup folder ---
+**/.history/
+

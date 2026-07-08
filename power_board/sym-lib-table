@@ -1,0 +1,5 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "2026-07-01_00-27-16") (type "KiCad") (uri "/home/noah/Projects/Inverted-Pendulum/schematics_and_footprints/ul_694106301002/KiCADv6/2026-07-01_00-27-16.kicad_sym") (options "") (descr ""))
+	(lib (name "MP1584EN-LF-P") (type "KiCad") (uri "/home/noah/Projects/Inverted-Pendulum/schematics_and_footprints/buck_converter/KiCADv6/MP1584EN-LF-P.kicad_sym") (options "") (descr ""))
+)
