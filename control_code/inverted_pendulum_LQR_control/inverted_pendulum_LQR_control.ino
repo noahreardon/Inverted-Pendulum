@@ -3,7 +3,9 @@
 // DEFINE CONSTANTS
 double zero_offset = 0;
 // double k[4] = {-0.1, 7.7067, -0.1213, 0.7476};
-double k[4] = {-0.0071, 0.5524, -0.0086, 0.0530};
+// double k[4] = {-0.0071, 0.5524, -0.0086, 0.0530};// pretty good performance
+// double k[4] = {-0.1, 11.2744, -0.13, 1.3903};
+double k[4] = {-0.0632, 5.8803, -0.0792, 0.6512};
 
 
     //motor parameters
@@ -107,41 +109,43 @@ void loop() {
     // get pendulum velocity
     double pendulum_velocity = sensor.getVelocity();
 
-    filt_pend_vel = 0.9 * filt_pend_vel + 0.1 * pendulum_velocity;
+    filt_pend_vel = 0.7 * filt_pend_vel + 0.3 * pendulum_velocity;
 
 
     if (current_angle > 2.967 && current_angle < 3.316) {
       // if the pendulum is within the bounds, update the torque and command the motor
-      double torque_command = -1 * ((k[0] * motor_angle) + (k[1] * (current_angle - PI)) + (k[2] * motor_velocity) + (k[3] * pendulum_velocity));
+      double torque_command = -1 * ((k[0] * motor_angle) + (k[1] * (current_angle - PI)) + (k[2] * motor_velocity) + (k[3] * filt_pend_vel));
       double voltage_command = torque_to_voltage(torque_command, motor_velocity);
-      voltage_command = constrain(
-        voltage_command,
-        -motor.voltage_limit,
-        motor.voltage_limit);
+      // voltage_command = constrain(
+      //   voltage_command,
+      //   -motor.voltage_limit,
+      //   motor.voltage_limit);
 
-      filt_v_cmd = 0.9 * filt_v_cmd + 0.1 * voltage_command;
+      // filt_v_cmd = 0.9 * filt_v_cmd + 0.1 * voltage_command;
 
 
+      // uncomment to display states
       // double u1 = -k[0] * motor_angle;
       // double u2 = -k[1] * (current_angle - PI);
       // double u3 = -k[2] * motor_velocity;
       // double u4 = -k[3] * filtered_pend_vel;
-
       // Serial.print(u1); Serial.print(",");
       // Serial.print(u2); Serial.print(",");
       // Serial.print(u3); Serial.print(",");
       // Serial.println(u4); 
 
 
+      // uncomment to display variables on the serial monitor with bounds
       // Serial.print(-10);
       // Serial.print(",");
       // Serial.print(10);
       // Serial.print(",");
       // Serial.println(voltage_command / 3);
       // Serial.print(",");
-      // Serial.println(filt_v_cmd / 4.7);
+      // filt_v_cmd = constrain(filt_v_cmd, -motor.voltage_limit, motor.voltage_limit);
+      // Serial.println(voltage_command);
   
-      motor.move(filt_v_cmd);
+      motor.move(voltage_command / 4);
 
 
       // double error = PI - current_angle;
@@ -160,8 +164,7 @@ void loop() {
     } else {
 
       // set motor torque to zero if it falls outside the range
-      motor.target = 0;
-      motor.move();
+      motor.move(0);
     }
     // Serial.print(0);
     // Serial.print(",");
@@ -169,7 +172,8 @@ void loop() {
     // Serial.print(",");
     // Serial.println(motor_velocity);
     // Serial.println(motor_angle);
-    // motor.move(3);
+    // motor.move(1);
+    // Serial.println(encoder.getAngle());
   
 
   }

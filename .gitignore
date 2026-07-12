@@ -21,3 +21,12 @@ codegen/
 # --- kicad backup folder ---
 **/.history/
 
+# Ignore virtual environments
+.venv/
+venv/
+ENV/
+
+# Ignore Python bytecode cache
+**/__pycache__/
+*.pyc
+
