@@ -10,11 +10,7 @@ double zero_offset = 0;
 double k[4] = {-0.0045, 0.4900, -0.0058, 0.0621};
 
 
-// double k[4] = {-0.1, 11.2744, -0.13, 1.3903};
-// double k[4] = {-0.0632, 5.8803, -0.0792, 0.6512};
-
-
-    //motor parameters
+//motor parameters
 const double motor_Kv = 20;
 const double motor_Kt = 60/(TWO_PI * motor_Kv);
 const double motor_Ke = motor_Kt;
@@ -82,7 +78,7 @@ void setup() {
   motor.voltage_limit = 8;
 
   // set torque control mode
-  motor.torque_controller = TorqueControlType::voltage;
+  motor.torque_controller = TorqueControlType::estimated_current;
   // set motion control mode
   motor.controller = MotionControlType::torque;
 
