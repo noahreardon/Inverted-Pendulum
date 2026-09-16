@@ -2,8 +2,11 @@
 
 // DEFINE CONSTANTS
 double zero_offset = 0;
-// double k[4] = {-0.1, 7.7067, -0.1213, 0.7476};
-double k[4] = {-0.0071, 0.5524, -0.0086, 0.0530};
+
+// define the K vector - these are pulled from the matlab script
+// double k[4] = {-0.0071, 0.5524, -0.0086, 0.0530};
+double k[4] = {-0.0045, 0.3470, -0.0054, 0.0336};
+
 
 
     //motor parameters
@@ -12,7 +15,7 @@ const double motor_Kt = 60/(TWO_PI * motor_Kv);
 const double motor_Ke = motor_Kt;
 const double motor_R = 13.7;
 
-static double filt_v_cmd = 0.0;
+// initialize values to be used in the filtering of velocity
 static double filt_pend_vel = 0.0;
 
 // initialize motor and driver
@@ -32,11 +35,6 @@ void doA() {
 
 void doB() {
   encoder.handleB();
-}
-
-double torque_to_voltage(double torque_cmd, double motor_vel) {
-  return (motor_R / motor_Kt) * torque_cmd + motor_Ke * motor_vel;
-
 }
 
 
@@ -81,7 +79,8 @@ void setup() {
 }
 
 unsigned long lastTime = 0;
-const unsigned long sampleTime = 200;
+const unsigned long sampleTime = 50;
+double last_pend_angle = 0.0;
 
 void loop() {
   // loop the FOC algorithm as fast as possible
@@ -90,12 +89,15 @@ void loop() {
   unsigned long currentTime = micros();
 
   if (currentTime - lastTime >= sampleTime) {
+    // set dt for the derivative calculation
+    double dt = (currentTime - lastTime) / 1000000.0;
+
     lastTime = currentTime;
 
     // get the new sensor reading
     sensor.update();
     double current_angle = (sensor.getAngle() - zero_offset);
-    current_angle = fmod(current_angle + TWO_PI, TWO_PI);
+    // current_angle = fmod(current_angle + TWO_PI, TWO_PI);
 
     // get the new motor position
     double motor_angle = encoder.getAngle();
@@ -104,7 +106,11 @@ void loop() {
     double motor_velocity = motor.shaft_velocity;
 
     // get pendulum velocity
-    double pendulum_velocity = sensor.getVelocity();
+    // double pendulum_velocity = sensor.getVelocity();
+
+    double pendulum_velocity = (current_angle - last_pend_angle) / dt;
+    last_pend_angle = current_angle;
+
 
     filt_pend_vel = 0.9 * filt_pend_vel + 0.1 * pendulum_velocity;
 
